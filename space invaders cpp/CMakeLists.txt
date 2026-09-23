@@ -26,6 +26,7 @@ FetchContent_MakeAvailable(raylib)
 add_executable(SpaceInvadersCpp 
     src/main.cpp
     src/player.cpp
+    src/Bullet.cpp
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
