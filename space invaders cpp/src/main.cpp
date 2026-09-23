@@ -16,11 +16,17 @@ int main()
     Player player{
         {SCREEN_WIDTH / 2.0f - 25.0f, SCREEN_HEIGHT - 60.0f},
         {50.0f, 20.0f},
-        300.0f
+        300.0f,
+        0.0f
     };
 
         // Bullets
     Bullet bullets[MAX_BULLETS] = {};
+    for (int i = 0; i < MAX_BULLETS; ++i)
+    {
+        bullets[i].size = {5.0f, 15.0f};
+        bullets[i].speed = 500.0f;
+    }
 
     // Boucle de jeu
     while (!WindowShouldClose())
@@ -36,7 +42,7 @@ int main()
         DrawText("Space Invaders", 300, 280, 30, WHITE);
 
             // Joueur
-        UpdatePlayer(player, dt);
+        UpdatePlayer(player, bullets, dt);
         DrawPlayer(player);
 
             // Bullets

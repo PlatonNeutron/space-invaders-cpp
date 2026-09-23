@@ -1,6 +1,6 @@
 #include "player.h"
 
-void UpdatePlayer(Player& player, float dt)
+void UpdatePlayer(Player& player, Bullet bullets[], float dt)
 {
     // Déplacement du joueur
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
@@ -23,4 +23,36 @@ void UpdatePlayer(Player& player, float dt)
     {
         player.position.x = 800.0f - player.size.x;
     }
+
+    // Gestion du cooldown de tir
+    if (player.fireCooldown > 0.0f)
+    {
+        player.fireCooldown -= dt;
+    }
+
+    // Tir du joueur
+    if (IsKeyPressed(KEY_SPACE) && player.fireCooldown <= 0.0f)
+    {
+        // Trouver un bullet inactif
+        for (int i = 0; i < MAX_BULLETS; ++i)
+        {
+            if (!bullets[i].active)
+            {
+                bullets[i].position = { player.position.x + player.size.x / 2.0f - bullets[i].size.x / 2.0f, player.position.y };
+                bullets[i].active = true;
+                player.fireCooldown = 0.5f; // Cooldown de tir de 0.5 secondes
+                break;
+            }
+        }
+    }
+}
+
+void DrawPlayer(Player& player){
+    DrawRectangle(
+        static_cast<int>(player.position.x),
+        static_cast<int>(player.position.y),
+        static_cast<int>(player.size.x),
+        static_cast<int>(player.size.y),
+        WHITE
+    );
 }
