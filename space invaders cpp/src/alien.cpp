@@ -1,4 +1,5 @@
 #include "alien.h"
+#include "audio.h"
 
 namespace
 {
@@ -21,7 +22,7 @@ int CountAliveAliens(const Alien aliens[])
     return count;
 }
 
-void UpdateAliens(Alien aliens[], float dt)
+void UpdateAliens(Alien aliens[], float dt, Audio& audio)
 {
     fleetStepTimer -= dt;
 
@@ -61,6 +62,7 @@ void UpdateAliens(Alien aliens[], float dt)
             for (int i = 0; i < MAX_ALIENS; ++i)
             {
                 aliens[i].position.x += fleetDirection * 10.0f;
+                PlaySound(audio.fleetStep);
             }
         }
     }
@@ -107,7 +109,7 @@ void DrawAliens(const Alien aliens[])
     }
 }
 
-void CheckBulletAlienCollisions(Bullet bullets[], Alien aliens[], HUD& hud){
+void CheckBulletAlienCollisions(Bullet bullets[], Alien aliens[], HUD& hud, Audio& audio){
     for (int i = 0; i < MAX_BULLETS; ++i)
     {
         if (bullets[i].active)
@@ -134,6 +136,7 @@ void CheckBulletAlienCollisions(Bullet bullets[], Alien aliens[], HUD& hud){
                     {
                         bullets[i].active = false;
                         aliens[j].alive = false;
+                        PlaySound(audio.alienDestroyed);
 
                         hud.score += 10;
                         hud.aliensAlives -= 1;

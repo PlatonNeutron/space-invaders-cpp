@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "bullet.h"
+#include "audio.h"
 
 struct Player
 {
@@ -11,5 +12,5 @@ struct Player
     float fireCooldown;
 };
 
-void UpdatePlayer(Player& player, Bullet bullets[], float dt);
+void UpdatePlayer(Player& player, Bullet bullets[], float dt, Audio& audio);
 void DrawPlayer(Player& player);

@@ -3,6 +3,7 @@
 #include "bullet.h"
 #include "alien.h"
 #include "hud.h"
+#include "audio.h"
 
 int main()
 {
@@ -14,6 +15,7 @@ int main()
 
     // Création de la fenêtre
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Space Invaders");
+    InitAudioDevice();
 
     // Initialisation des assets
         // Joueur
@@ -57,7 +59,21 @@ int main()
         MAX_ALIENS
     };
 
+        // GameStates
+    enum class GameState
+    {
+        Playing,
+        Won,
+        Lost
+    };
+    GameState gameState = GameState::Playing;
 
+        // Audio
+    Audio audio{};
+    InitGameAudio(audio);
+    
+
+    
     // Boucle de jeu
     while (!WindowShouldClose())
     {
@@ -70,26 +86,59 @@ int main()
 
         // Update du jeu
             // Joueur
-        UpdatePlayer(player, bullets, dt);
+        UpdatePlayer(player, bullets, dt, audio);
         DrawPlayer(player);
 
             // Bullets
         UpdateBullets(bullets, dt);
         DrawBullets(bullets);
 
-        CheckBulletAlienCollisions(bullets, aliens, hud);
+        CheckBulletAlienCollisions(bullets, aliens, hud, audio);
+
+        // Check condition de victoire
+        if (CountAliveAliens(aliens) == 0)
+        {
+            gameState = GameState::Won;
+        }
 
             // Aliens
-        UpdateAliens(aliens, dt);
+        UpdateAliens(aliens, dt, audio);
         DrawAliens(aliens);
+
+        // Check condition de défaite
+        for (int i = 0; i < MAX_ALIENS; ++i)
+        {
+            if (aliens[i].alive)
+            {
+                if (aliens[i].position.y + aliens[i].size.y >= player.position.y)
+                {
+                    gameState = GameState::Lost;
+                    break;
+                }
+            } 
+        }
         
             // HUD
         DrawHUD(hud);
+
+        // Affichage du message de victoire ou de défaite
+        if (gameState == GameState::Won)
+        {
+            DrawText("VICTOIRE !", 300, 250, 40, GREEN);
+            PlaySound(audio.win);
+        }
+        else if (gameState == GameState::Lost)
+        {
+            DrawText("DEFAITE !", 300, 250, 40, RED);
+            PlaySound(audio.lose);
+        }
 
         // fin de la boucle de dessin
         EndDrawing();
     }
 
+    UnloadGameAudio(audio);
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

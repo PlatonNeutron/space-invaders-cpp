@@ -1,6 +1,7 @@
 #include "player.h"
+#include "audio.h"
 
-void UpdatePlayer(Player& player, Bullet bullets[], float dt)
+void UpdatePlayer(Player& player, Bullet bullets[], float dt, Audio& audio)
 {
     // Déplacement du joueur
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
@@ -40,6 +41,7 @@ void UpdatePlayer(Player& player, Bullet bullets[], float dt)
             {
                 bullets[i].position = { player.position.x + player.size.x / 2.0f - bullets[i].size.x / 2.0f, player.position.y };
                 bullets[i].active = true;
+                PlaySound(audio.laser);
                 player.fireCooldown = 0.5f; // Cooldown de tir de 0.5 secondes
                 break;
             }
