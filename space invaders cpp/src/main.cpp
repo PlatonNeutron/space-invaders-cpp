@@ -70,7 +70,7 @@ int main()
 
         // Update du jeu
             // Joueur
-        UpdatePlayer(player, bullets, dt, hud);
+        UpdatePlayer(player, bullets, dt);
         DrawPlayer(player);
 
             // Bullets
