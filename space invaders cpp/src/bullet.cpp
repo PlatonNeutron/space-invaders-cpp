@@ -1,4 +1,4 @@
-#include "Bullet.h"
+#include "bullet.h"
 
 void UpdateBullets(Bullet bullets[], float dt)
 {

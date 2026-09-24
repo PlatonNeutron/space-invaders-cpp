@@ -136,6 +136,7 @@ void CheckBulletAlienCollisions(Bullet bullets[], Alien aliens[], HUD& hud){
                         aliens[j].alive = false;
 
                         hud.score += 10;
+                        hud.aliensAlives -= 1;
 
                         break;
                     }
