@@ -1,12 +1,21 @@
-#include "raylib.h"
-#include "player.h"
-#include "bullet.h"
-#include "alien.h"
-#include "hud.h"
-#include "audio.h"
+#include <memory>
 
+#include "raylib.h"
+
+#include "../include/subsystems/EngineSubsystemManager.h"
+#include "../include/subsystems/AudioSubsystem.h"
+#include "../include/subsystems/GameplaySubsystem.h"
+
+#include "../include/Player.h"
+#include "../include/Bullet.h"
+#include "../include/Alien.h"
+#include "../include/HUD.h"
+#include "../include/Audio.h"
+
+// Programme principal du jeu
 int main()
 {
+    // Set le FPS cible à 60
     SetTargetFPS(60);
 
     // Const de la taille de la fenêtre
@@ -15,6 +24,14 @@ int main()
 
     // Création de la fenêtre
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Space Invaders");
+
+    // Initialisation de l'engine subsystem manager et des sous systèmes
+    EngineSubsystemManager engineSubsystemManager;
+    engineSubsystemManager.AddSubsystem(std::make_unique<AudioSubsystem>());
+    engineSubsystemManager.AddSubsystem(std::make_unique<GameplaySubsystem>());
+
+    engineSubsystemManager.Init();
+
     InitAudioDevice();
 
     // Initialisation des assets
@@ -136,6 +153,8 @@ int main()
         // fin de la boucle de dessin
         EndDrawing();
     }
+
+    engineSubsystemManager.Shutdown();
 
     UnloadGameAudio(audio);
     CloseAudioDevice();

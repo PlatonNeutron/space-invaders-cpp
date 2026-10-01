@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../include/Player.h"
 #include "audio.h"
 
 void UpdatePlayer(Player& player, Bullet bullets[], float dt, Audio& audio)

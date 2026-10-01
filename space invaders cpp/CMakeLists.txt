@@ -30,6 +30,7 @@ add_executable(SpaceInvadersCpp
     src/alien.cpp
     src/hud.cpp
     src/audio.cpp
+    src/subsystems/AudioSubsystem.cpp
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
