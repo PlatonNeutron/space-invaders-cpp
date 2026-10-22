@@ -25,12 +25,16 @@ FetchContent_MakeAvailable(raylib)
 # Add source to this project's executable.
 add_executable(SpaceInvadersCpp 
     src/main.cpp
+    src/subsystems/managers/EngineSubsystemsManager.cpp
+    src/subsystems/managers/LocalPlayerSubsystemsManager.cpp
+    src/subsystems/managers/WorldSubsystemsManager.cpp
+    src/subsystems/subsystems/engine/WindowSubsystem.cpp
+    src/subsystems/subsystems/engine/AudioSubsystem.cpp
     src/player.cpp
     src/bullet.cpp
     src/alien.cpp
     src/hud.cpp
     src/audio.cpp
-    src/subsystems/AudioSubsystem.cpp
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
