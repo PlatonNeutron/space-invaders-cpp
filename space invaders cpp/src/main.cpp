@@ -26,10 +26,6 @@ int main()
     LocalPlayerSubsystemsManager localPlayerSubsystemsManager;
     WorldSubsystemsManager worldSubsystemsManager;
 
-    // Ajout des sous-systèmes aux managers
-    engineSubsystemsManager.AddSubsystem(std::make_unique<WindowSubsystem>());
-    engineSubsystemsManager.AddSubsystem(std::make_unique<AudioSubsystem>());
-
     // Initialisation des managers
     engineSubsystemsManager.Init();
     localPlayerSubsystemsManager.Init();
