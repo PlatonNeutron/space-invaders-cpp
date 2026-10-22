@@ -1,4 +1,5 @@
 #include "subsystems/managers/EngineSubsystemsManager.h"
+#include "subsystems/subsystems/engine/EngineSubsystemsRegistry.h"
 
 void EngineSubsystemsManager::AddSubsystem(std::unique_ptr<ISubsystem> subsystem)
 {
@@ -7,6 +8,15 @@ void EngineSubsystemsManager::AddSubsystem(std::unique_ptr<ISubsystem> subsystem
 
 void EngineSubsystemsManager::Init()
 {
+    // Création automatique des sous-systèmes via les factories enregistrés
+    for (auto factory : EngineSubsystemsRegistry::GetFactories())
+    {
+        std::unique_ptr<ISubsystem> subsystem = factory();
+
+        AddSubsystem(std::move(subsystem));
+    }
+
+    // Initialisation des sous-systèmes
     for (auto& subsystem : subsystems)
     {
         subsystem->Init();
