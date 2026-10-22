@@ -1,4 +1,7 @@
 #include "subsystems/subsystems/engine/AudioSubsystem.h"
+#include "subsystems/subsystems/engine/EngineSubsystemsRegistry.h"
+
+REGISTER_ENGINE_SUBSYSTEM(AudioSubsystem)
 
 void AudioSubsystem::Init()
 {
