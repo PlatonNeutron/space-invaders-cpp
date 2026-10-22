@@ -35,10 +35,13 @@ int main()
     localPlayerSubsystemsManager.Init();
     worldSubsystemsManager.Init();
 
+    Audio audio{};
+    InitGameAudio(audio);
+
     // Initialisation des assets
         // Joueur
     Player player{
-        {SCREEN_WIDTH / 2.0f - 25.0f, SCREEN_HEIGHT - 60.0f},
+        {800 / 2.0f - 25.0f, 600 - 60.0f},
         {50.0f, 20.0f},
         300.0f,
         0.0f
@@ -153,6 +156,8 @@ int main()
     engineSubsystemsManager.Shutdown();
     localPlayerSubsystemsManager.Shutdown();
     worldSubsystemsManager.Shutdown();
+
+    UnloadGameAudio(audio);
 
     return 0;
 }
