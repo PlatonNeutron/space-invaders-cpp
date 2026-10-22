@@ -2,37 +2,38 @@
 
 #include "raylib.h"
 
-#include "../include/subsystems/EngineSubsystemManager.h"
-#include "../include/subsystems/AudioSubsystem.h"
-#include "../include/subsystems/GameplaySubsystem.h"
+// Include des managers
+#include "subsystems/managers/EngineSubsystemsManager.h"
+#include "subsystems/managers/LocalPlayerSubsystemsManager.h"
+#include "subsystems/managers/WorldSubsystemsManager.h"
 
-#include "../include/Player.h"
-#include "../include/Bullet.h"
-#include "../include/Alien.h"
-#include "../include/HUD.h"
-#include "../include/Audio.h"
+// Include des sous-systèmes
+#include "subsystems/subsystems/engine/WindowSubsystem.h"
+#include "subsystems/subsystems/engine/AudioSubsystem.h"
+//#include "subsystems/GameplaySubsystem.h"
+
+#include "Player.h"
+#include "Bullet.h"
+#include "Alien.h"
+#include "HUD.h"
+#include "Audio.h"
 
 // Programme principal du jeu
 int main()
 {
-    // Set le FPS cible à 60
-    SetTargetFPS(60);
+    // Création des manager
+    EngineSubsystemsManager engineSubsystemsManager;
+    LocalPlayerSubsystemsManager localPlayerSubsystemsManager;
+    WorldSubsystemsManager worldSubsystemsManager;
 
-    // Const de la taille de la fenêtre
-    constexpr int SCREEN_WIDTH = 800;
-    constexpr int SCREEN_HEIGHT = 600;
+    // Ajout des sous-systèmes aux managers
+    engineSubsystemsManager.AddSubsystem(std::make_unique<WindowSubsystem>());
+    engineSubsystemsManager.AddSubsystem(std::make_unique<AudioSubsystem>());
 
-    // Création de la fenêtre
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Space Invaders");
-
-    // Initialisation de l'engine subsystem manager et des sous systèmes
-    EngineSubsystemManager engineSubsystemManager;
-    engineSubsystemManager.AddSubsystem(std::make_unique<AudioSubsystem>());
-    engineSubsystemManager.AddSubsystem(std::make_unique<GameplaySubsystem>());
-
-    engineSubsystemManager.Init();
-
-    InitAudioDevice();
+    // Initialisation des managers
+    engineSubsystemsManager.Init();
+    localPlayerSubsystemsManager.Init();
+    worldSubsystemsManager.Init();
 
     // Initialisation des assets
         // Joueur
@@ -84,12 +85,6 @@ int main()
         Lost
     };
     GameState gameState = GameState::Playing;
-
-        // Audio
-    Audio audio{};
-    InitGameAudio(audio);
-    
-
     
     // Boucle de jeu
     while (!WindowShouldClose())
@@ -154,10 +149,10 @@ int main()
         EndDrawing();
     }
 
-    engineSubsystemManager.Shutdown();
+    // Shutdown des managers
+    engineSubsystemsManager.Shutdown();
+    localPlayerSubsystemsManager.Shutdown();
+    worldSubsystemsManager.Shutdown();
 
-    UnloadGameAudio(audio);
-    CloseAudioDevice();
-    CloseWindow();
     return 0;
 }

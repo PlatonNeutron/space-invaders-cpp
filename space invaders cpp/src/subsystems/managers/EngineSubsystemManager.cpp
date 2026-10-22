@@ -1,11 +1,11 @@
-#include "../../include/subsystems/EngineSubsystemManager.h"
+#include "subsystems/managers/EngineSubsystemsManager.h"
 
-void EngineSubsystemManager::AddSubsystem(std::unique_ptr<ISubsystem> subsystem)
+void EngineSubsystemsManager::AddSubsystem(std::unique_ptr<ISubsystem> subsystem)
 {
     subsystems.push_back(std::move(subsystem));
 }
 
-void EngineSubsystemManager::Init()
+void EngineSubsystemsManager::Init()
 {
     for (auto& subsystem : subsystems)
     {
@@ -13,7 +13,7 @@ void EngineSubsystemManager::Init()
     }
 }
 
-void EngineSubsystemManager::Update(float dt)
+void EngineSubsystemsManager::Update(float dt)
 {
     for (auto& subsystem : subsystems)
     {
@@ -21,7 +21,7 @@ void EngineSubsystemManager::Update(float dt)
     }
 }
 
-void EngineSubsystemManager::Shutdown()
+void EngineSubsystemsManager::Shutdown()
 {
     for (auto& subsystem : subsystems)
     {

@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-class EngineSubsystemManager
+class EngineSubsystemsManager
 {
 private:
     std::vector<std::unique_ptr<ISubsystem>> subsystems;
