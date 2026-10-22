@@ -23,8 +23,8 @@ void WorldSubsystemsManager::Update(float dt)
 
 void WorldSubsystemsManager::Shutdown()
 {
-    for (auto& subsystem : subsystems)
+    for (auto it = subsystems.rbegin(); it != subsystems.rend(); ++it)
     {
-        subsystem->Shutdown();
+        (*it)->Shutdown();
     }
 }

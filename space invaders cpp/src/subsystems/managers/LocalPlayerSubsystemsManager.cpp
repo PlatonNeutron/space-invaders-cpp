@@ -23,8 +23,8 @@ void LocalPlayerSubsystemsManager::Update(float dt)
 
 void LocalPlayerSubsystemsManager::Shutdown()
 {
-    for (auto& subsystem : subsystems)
+    for (auto it = subsystems.rbegin(); it != subsystems.rend(); ++it)
     {
-        subsystem->Shutdown();
+        (*it)->Shutdown();
     }
 }
