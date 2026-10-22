@@ -1,7 +1,9 @@
-#include "../../include/subsystems/AudioSubsystem.h"
+#include "subsystems/subsystems/engine/AudioSubsystem.h"
 
 void AudioSubsystem::Init()
 {
+    InitAudioDevice();
+
     laser = LoadSound("../../assets/laser.wav");
     alienDestroyed = LoadSound("../../assets/alien_destroyed.wav");
     fleetStep = LoadSound("../../assets/fleet_step.wav");
@@ -22,6 +24,8 @@ void AudioSubsystem::Shutdown()
     UnloadSound(fleetStep);
     UnloadSound(win);
     UnloadSound(lose);
+
+    CloseAudioDevice();
 }
 
 void AudioSubsystem::PlayLaser()
