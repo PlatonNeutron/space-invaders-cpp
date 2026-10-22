@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ISubsystem.h"
+#include "subsystems/ISubsystem.h"
 #include "raylib.h"
 
 class AudioSubsystem : public ISubsystem
