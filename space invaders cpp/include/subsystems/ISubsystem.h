@@ -1,5 +1,8 @@
 #pragma once
 
+#include <typeindex>
+#include <vector>
+
 class ISubsystem
 {
 public:
@@ -8,6 +11,11 @@ public:
     virtual bool ShouldCreateSubsystem(const void* outer) const
     {
         return true;
+    }
+
+    virtual std::vector<std::type_index> GetDependencies() const
+    {
+        return {};
     }
 
     virtual void Init() = 0;

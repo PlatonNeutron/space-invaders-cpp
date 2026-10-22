@@ -8,6 +8,7 @@ class EngineSubsystemsManager
 {
 private:
     std::vector<std::unique_ptr<ISubsystem>> subsystems;
+    std::vector<ISubsystem*> initializationOrder;
 
 public:
     void AddSubsystem(std::unique_ptr<ISubsystem> subsystem);
