@@ -1,4 +1,7 @@
 #include "subsystems/subsystems/engine/WindowSubsystem.h"
+#include "subsystems/subsystems/engine/EngineSubsystemsRegistry.h"
+
+REGISTER_ENGINE_SUBSYSTEM(WindowSubsystem)
 
 void WindowSubsystem::Init()
 {
